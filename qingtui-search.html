@@ -31,6 +31,7 @@
   .table td:last-child{padding-right:16px}
   .table td.brand{color:#7c3aed;font-weight:500;white-space:nowrap}
   .table td.series{color:#666}
+  .table td a.spu-a{color:inherit;text-decoration:none;display:block;width:100%}
   .empty{text-align:center;padding:50px 20px;color:#86868b;font-size:14px;background:#fff}
   .empty .icon{font-size:36px;margin-bottom:8px;opacity:.4}
 </style>
@@ -97,10 +98,11 @@ function render(){
   }
   let html = '';
   for(const d of filtered){
+    const url = DETAIL_URL + d.spu;
     html += '<tr data-spu="' + d.spu + '">'
-      + '<td>' + escapeHTML(d.name) + '</td>'
-      + '<td class="brand">' + escapeHTML(d.brand) + '</td>'
-      + '<td class="series">' + escapeHTML(d.series) + '</td>'
+      + '<td><a href="' + url + '" class="spu-a">' + escapeHTML(d.name) + '</a></td>'
+      + '<td class="brand"><a href="' + url + '" class="spu-a">' + escapeHTML(d.brand) + '</a></td>'
+      + '<td class="series"><a href="' + url + '" class="spu-a">' + escapeHTML(d.series) + '</a></td>'
       + '</tr>';
   }
   $tbody.innerHTML = html;
@@ -108,12 +110,6 @@ function render(){
 
 $q.addEventListener('input', render);
 $brand.addEventListener('change', render);
-$tbody.addEventListener('click', function(e){
-  const tr = e.target.closest('tr');
-  if(!tr || !tr.dataset.spu) return;
-  location.href = DETAIL_URL + tr.dataset.spu;
-});
-
 render();
 </script>
 </body>
